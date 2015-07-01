@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  * You may assume that there won't be exceptional situations (like stack
  * underflow or division by zero).
  * 
- * @author Kacper
+ * @author Maciej Gzik
  *
  */
 public class Calc {
