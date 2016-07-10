@@ -40,6 +40,8 @@ Powers.powers(new int[]{1,2,3,4}); // 16
 
 public class Powers {
 
+
+
     public static void main(String[] args) {
         System.out.println(Powers.powers(new int[500]));
     }

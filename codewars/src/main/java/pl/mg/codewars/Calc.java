@@ -1,7 +1,5 @@
 package pl.mg.codewars;
 
-import java.awt.Checkbox;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.regex.Pattern;

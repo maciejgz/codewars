@@ -1,5 +1,7 @@
 package pl.mg.codewars;
 
+import java.awt.image.SinglePixelPackedSampleModel;
+
 /**
  * When landing an airplane manually, the pilot knows which runway he is using and usually has up to date wind information (speed and direction). This information alone does not help the pilot make a safe landing; what the pilot really needs to know is the speed of headwind, how much crosswind there is and from which side the crosswind is blowing relative to the plane.
  * <p/>
@@ -30,7 +32,47 @@ package pl.mg.codewars;
  */
 public class WindCalculator {
 
-    public static void main(String[] args){
-        System.out.println("wind");
+
+    public static String calculateWind(String rwy, int windDirection, int windSpeed) {
+        String result = null;
+        //runaway
+        if (rwy.charAt(rwy.length() - 1) == 'L' || rwy.charAt(rwy.length() - 1) == 'C'
+                || rwy.charAt(rwy.length() - 1) == 'R') {
+            rwy = rwy.substring(0, rwy.length() - 1);
+        }
+
+        float cw = (float) (Math.sin(Math.toRadians(getAngle(Double.parseDouble(rwy), windDirection))) * windSpeed);
+        float hw = (float) (Math.cos(Math.toRadians(getAngle(Double.parseDouble(rwy), windDirection))) * windSpeed);
+
+        //head/tail
+        String front = "";
+        if ((getAngle(Double.parseDouble(rwy), windDirection)) < 90
+                || (getAngle(Double.parseDouble(rwy), windDirection)) > 270) {
+            front = "Head";
+        } else {
+            front = "Tail";
+        }
+
+        //right/left
+        String side = "";
+        if ((getAngle(Double.parseDouble(rwy), windDirection)) < 180) {
+            side = "right";
+        } else {
+            side = "left";
+        }
+
+        result = front + "wind " + (int) hw + " knots. Crosswind " + (int) cw + " knots from your " + side + ".";
+
+        return result;
+    }
+
+    public static double getAngle(double runawayDirection, int windDirection) {
+        double result = 0.0;
+        if (windDirection < runawayDirection) {
+            result = 360 - runawayDirection + windDirection;
+        } else {
+            result = windDirection - runawayDirection;
+        }
+        return result;
     }
 }
