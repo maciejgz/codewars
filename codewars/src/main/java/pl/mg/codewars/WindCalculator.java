@@ -32,7 +32,6 @@ import java.awt.image.SinglePixelPackedSampleModel;
  */
 public class WindCalculator {
 
-
     public static String calculateWind(String rwy, int windDirection, int windSpeed) {
         String result = null;
         //runaway
@@ -41,27 +40,34 @@ public class WindCalculator {
             rwy = rwy.substring(0, rwy.length() - 1);
         }
 
-        float cw = (float) (Math.sin(Math.toRadians(getAngle(Double.parseDouble(rwy), windDirection))) * windSpeed);
-        float hw = (float) (Math.cos(Math.toRadians(getAngle(Double.parseDouble(rwy), windDirection))) * windSpeed);
+        double angle = getAngle(Double.parseDouble(rwy) * 10, windDirection);
+        double angleRadians = Math.toRadians(angle);
+
+        float cw = (float) (Math.sin(angleRadians) * windSpeed);
+        float hw = (float) (Math.cos(angleRadians) * windSpeed);
 
         //head/tail
         String front = "";
-        if ((getAngle(Double.parseDouble(rwy), windDirection)) < 90
-                || (getAngle(Double.parseDouble(rwy), windDirection)) > 270) {
+        if (angle <= 90 || angle >= 270) {
             front = "Head";
         } else {
             front = "Tail";
         }
+        
+        if((int) Math.round((Math.abs(hw))) == 0){
+            front = "Head";
+        }
 
         //right/left
         String side = "";
-        if ((getAngle(Double.parseDouble(rwy), windDirection)) < 180) {
-            side = "right";
-        } else {
+        if (angle > 180) {
             side = "left";
+        } else {
+            side = "right";
         }
 
-        result = front + "wind " + (int) hw + " knots. Crosswind " + (int) cw + " knots from your " + side + ".";
+        result = front + "wind " + Math.round((Math.abs(hw))) + " knots. Crosswind "
+                + Math.round((Math.abs(cw))) + " knots from your " + side + ".";
 
         return result;
     }
