@@ -12,6 +12,10 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	
+	<description>
+		Codewars cata's.
+	</description>
 
 	<dependencies>
 		<dependency>
